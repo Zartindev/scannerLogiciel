@@ -21,10 +21,20 @@ import javafx.stage.Stage;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AddLivre {
+	
+	String url = "jdbc:mysql://localhost/projet?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+    String login = "root";
+    String password = "";
+    Connection conn = null;
+    String img = "fdhfd" ;
 	
 	private Desktop desktop = Desktop.getDesktop();
 
@@ -99,7 +109,8 @@ public class AddLivre {
 			Visuals.visualAdminButtons(openButton);
  
 // ACTIONS ----------------------------------------------------------------------------------->
-	        
+			
+			
 	        // Add a picture that the user wants for his book
 	        // Possibility to change the pic again with the button (which the name change for "changer l'image" after add a first time)
 	        openButton.setOnAction(
@@ -114,6 +125,7 @@ public class AddLivre {
 	                    	// get the link of the pic, and add it in a string fileContenu 
 	                    	// for using it and dispay it under the button openButton
 	                    	String fileContenu = "file:///" + file.getAbsolutePath();
+	                    	img = fileContenu;
 	                    	Image image2 = new Image(fileContenu);
 	                		ImageView im2 = new ImageView();
 	                		im2.setFitHeight(200);
@@ -133,6 +145,54 @@ public class AddLivre {
 	                    }
 	                }
 	            });
+	        
+	        
+	        ajouterFinal.setOnMouseClicked((e1) -> {
+
+	            String nomLivre = nomLivreTF.getText();
+	            String nomAuteur = nomAuteurTF.getText();
+	            String annee = anneeTF.getText();
+	            String lieu = lieuTF.getText();
+	            String commentaire = commentaireTF.getText();
+	            String prenomAuteur = prenomAuteurTF.getText();
+	            
+	            
+	            int nombrePage = Integer.parseInt(nombrePagesTF.getText());
+	            try {
+
+	                Class.forName("com.mysql.cj.jdbc.Driver");
+	                conn = DriverManager.getConnection(url, login, password);
+
+	            }
+
+	            catch (ClassNotFoundException e) {
+	                System.err.println("Erreur de chargement");
+	                e.printStackTrace();
+	            }
+
+	            catch (SQLException e) {
+	                System.err.println("Erreur de chargement");
+	                e.printStackTrace();
+	            }
+	            try {
+	            Statement stmt = conn.createStatement();
+	            conn.setAutoCommit(false);
+	            stmt.addBatch("INSERT INTO `livre` (`idLivre`, `titre`, `lieux`, `nbPage`, `anneeEd`, `commentaire`, `linkImg`) VALUES (null,'" + nomLivre + "','" + lieu + "'," + nombrePage + ",'" + annee + "','" + commentaire + "','" + img + "')");
+	            stmt.addBatch("INSERT INTO `auteur` (`idAuteur`, `nom`, `prenom`) VALUES (null,'" + nomAuteur + "','" + prenomAuteur + "')");
+	            int[] updateCounts = stmt.executeBatch();
+	            conn.commit();
+	            conn.setAutoCommit(true);
+	            }
+	            catch (SQLException e) {
+	              System.err.println("Erreur de chargement");
+	              e.printStackTrace();
+	          }
+	  
+	          });
+	        
+	        
+	        
+	        System.out.println(img);
 		
 	    root.add(openButton, 2, 2);
 		root.getRowConstraints().addAll(rowConstraint, rowConstraint, rowConstraint, rowConstraint);

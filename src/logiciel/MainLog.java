@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 public class MainLog extends Application {
 
 	private int presenceAdminButton = 0;
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
