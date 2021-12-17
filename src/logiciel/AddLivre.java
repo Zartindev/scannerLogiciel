@@ -149,15 +149,15 @@ public class AddLivre {
 	        
 	        ajouterFinal.setOnMouseClicked((e1) -> {
 
-	            String nomLivre = nomLivreTF.getText();
-	            String nomAuteur = nomAuteurTF.getText();
-	            String annee = anneeTF.getText();
-	            String lieu = lieuTF.getText();
-	            String commentaire = commentaireTF.getText();
-	            String prenomAuteur = prenomAuteurTF.getText();
+	            String nomLivre = nomLivreTF.getText();         //variable de récupération du nom du livre
+	            String nomAuteur = nomAuteurTF.getText();       //variable de récupération du nom de l'auteur
+	            String annee = anneeTF.getText();               //variable de récupération de l'année
+	            String lieu = lieuTF.getText();                 //variable de récupération du lieu d'écriture de l'oeuvre
+	            String commentaire = commentaireTF.getText();   //variable de récupération du commentaire de l'utilisateur
+	            String prenomAuteur = prenomAuteurTF.getText(); //variable de récupération du prenom de l'auteur
 	            
 	            
-	            int nombrePage = Integer.parseInt(nombrePagesTF.getText());
+	            int nombrePage = Integer.parseInt(nombrePagesTF.getText()); // variable de récupération du nombre de page qui sera ensuite transformé en Int pour la base
 	            try {
 
 	                Class.forName("com.mysql.cj.jdbc.Driver");
@@ -174,7 +174,7 @@ public class AddLivre {
 	                System.err.println("Erreur de chargement");
 	                e.printStackTrace();
 	            }
-	            try {
+	            try { // ajout des entrées qui sont les txtbox, dans la BDD a l'aide des requetes INSERT INTO
 	            Statement stmt = conn.createStatement();
 	            conn.setAutoCommit(false);
 	            stmt.addBatch("INSERT INTO `livre` (`idLivre`, `titre`, `lieux`, `nbPage`, `anneeEd`, `commentaire`, `linkImg`) VALUES (null,'" + nomLivre + "','" + lieu + "'," + nombrePage + ",'" + annee + "','" + commentaire + "','" + img + "')");
