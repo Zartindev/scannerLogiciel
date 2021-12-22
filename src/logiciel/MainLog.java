@@ -2,6 +2,7 @@ package logiciel;
 
 import javafx.application.Application;
 
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -115,7 +116,8 @@ public class MainLog extends Application {
 		root.add(admin, 2, 0);
 		GridPane.setHalignment(text, HPos.CENTER);
 		root.add(text, 2, 1);
-
+		
+		
 // ACTIONS ----------------------------------------------------------------------------------->
 
 		libraryBooks.setOnMouseClicked((e) -> {

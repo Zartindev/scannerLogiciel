@@ -1,6 +1,7 @@
 package logiciel;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class Visuals extends MainLog {
 	
@@ -31,6 +32,17 @@ public class Visuals extends MainLog {
 			button.setMinHeight(20);
 			button.setStyle(visualAdminButton());
 		}
+		
+		public static void visualLabelsRed(Label label) {
+
+			label.setMinHeight(20);
+			label.setStyle(visualLabelRed());
+		}
+		public static void visualLabelsBlack(Label label) {
+
+			label.setMinHeight(20);
+			label.setStyle(visualLabelBlack());
+		}
 
 		/**
 		 * Return all the visual CSS characteristics of main Buttons.
@@ -54,6 +66,16 @@ public class Visuals extends MainLog {
 			return "-fx-background-color: -fx-outer-border; " + "-fx-background-radius: 0px, 3px, 2px, 1px; "
 					+ "-fx-font-weight: bold; " + "-fx-text-fill: #b33939 ; " + "-fx-font-size: 15;";
 		}
+		
+		public static String visualLabelRed() {
+
+			return "-fx-font-weight: bold; " + "-fx-text-fill: #b33939 ; " + "-fx-font-size: 15;";
+		}
+		public static String visualLabelBlack() {
+
+			return "-fx-font-weight: bold; " + "-fx-font-size: 15;";
+		}
+
 
 
 }
