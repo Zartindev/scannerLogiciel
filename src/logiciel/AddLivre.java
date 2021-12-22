@@ -125,8 +125,11 @@ public class AddLivre {
 	                    	// get the link of the pic, and add it in a string fileContenu 
 	                    	// for using it and dispay it under the button openButton
 	                    	String fileContenu = "file:///" + file.getAbsolutePath();
-	                    	img = fileContenu;
-	                    	Image image2 = new Image(fileContenu);
+	                    	// we replace all backslash with forwardslash because of sql storage can t save backslash
+	                    	String newFileContenu = fileContenu.replace("\\", "/");
+	                    	System.out.println(newFileContenu);
+	                    	img = newFileContenu;
+	                    	Image image2 = new Image(newFileContenu);
 	                		ImageView im2 = new ImageView();
 	                		im2.setFitHeight(200);
 	                		im2.setFitWidth(150);
