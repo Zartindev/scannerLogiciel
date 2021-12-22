@@ -142,7 +142,7 @@ public class AddLivre {
 		root.add(ajouterFinal, 2, 6);
 
 		final FileChooser fileChooser = new FileChooser();
-		final Button openButton = new Button("Ouvrir une image...");
+		final Button openApic = new Button("Ouvrir une image...");
 
 // VISUELS ----------------------------------------------------------------------------------->
 		Visuals.visualLabelsRed(nomLivreL);
@@ -155,27 +155,29 @@ public class AddLivre {
 		Visuals.visualLabelsBlack(imageL);
 
 		Visuals.visualAdminButtons(ajouterFinal);
-		Visuals.visualAdminButtons(openButton);
+		Visuals.visualAdminButtons(openApic);
 
 // ACTIONS ----------------------------------------------------------------------------------->
-
+		
 		// Add a picture that the user wants for his book
 		// Possibility to change the pic again with the button (which the name change
 		// for "changer l'image" after add a first time)
-		openButton.setOnAction(new EventHandler<ActionEvent>() {
+		openApic.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent e) {
 				File file = fileChooser.showOpenDialog(null);
 				if (file != null) {
 					System.out.println("LIEN DE L'IMAGE : " + file);
 
-					openButton.setText("Changer l'image");
+					openApic.setText("Changer l'image");
 					;
 					// get the link of the pic, and add it in a string fileContenu
 					// for using it and dispay it under the button openButton
 					String fileContenu = "file:///" + file.getAbsolutePath();
-					img = fileContenu;
-					Image image2 = new Image(fileContenu);
+					String newFileContenu = fileContenu.replace('\\', '/');
+					img = newFileContenu;
+					// changer ici les antislash en slash
+					Image image2 = new Image(newFileContenu);
 					ImageView im2 = new ImageView();
 					im2.setFitHeight(200);
 					im2.setFitWidth(150);
@@ -189,12 +191,14 @@ public class AddLivre {
 					afficheImage.setOnMouseClicked((exception) -> {
 
 						openFile(file);
+				
 					});
 
 				}
 			}
 		});
-
+		
+		// Button Ajouter Un Livre
 		ajouterFinal.setOnMouseClicked((e1) -> {
 
 			String nomLivre = nomLivreTF.getText(); // variable de récupération du nom du livre
@@ -278,7 +282,7 @@ public class AddLivre {
 
 		System.out.println(img);
 
-		root.add(openButton, 2, 2);
+		root.add(openApic, 2, 2);
 		root.getRowConstraints().addAll(rowConstraint, rowConstraint, rowConstraint, rowConstraint);
 
 		return root;
@@ -292,5 +296,7 @@ public class AddLivre {
 			Logger.getLogger(FileChooserSample.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	
+
 
 }
