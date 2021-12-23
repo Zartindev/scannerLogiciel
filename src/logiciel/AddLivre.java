@@ -259,7 +259,6 @@ public class AddLivre {
 									+ "','" + img + "')");
 					stmt.addBatch("INSERT INTO `auteur` (`idAuteur`, `nom`, `prenom`) VALUES (null,'" + nomAuteur
 							+ "','" + prenomAuteur + "')");
-					int[] updateCounts = stmt.executeBatch();
 					conn.commit();
 					conn.setAutoCommit(true);
 				} catch (SQLException e) {

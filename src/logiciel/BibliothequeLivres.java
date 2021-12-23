@@ -1,35 +1,35 @@
 package logiciel;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.FileChooser;
 
 public class BibliothequeLivres {
 
+	//Database connection
 	String url = "jdbc:mysql://localhost/projet?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
 	String login = "root";
 	String password = "";
 	Connection conn = null;
+	//properties for sql query
+	String titre = "";
+	String lieux = "";
+	int nbPage = 0;
+	int anneeEd = 0;
+	String commentaire = "";
 	String imgf ="";
 
 	public GridPane pageBiblioLivres() {
@@ -76,6 +76,7 @@ public class BibliothequeLivres {
 		
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//try catch for database connection
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -95,38 +96,46 @@ public class BibliothequeLivres {
 
 		try {
 			
-
+			//count number of book query
 			Statement stmt = conn.createStatement();
 			String sql = "SELECT COUNT(idLivre) AS total FROM Livre";
 			ResultSet rs = stmt.executeQuery(sql);
-			int total = 0;
+			//location for root img
 			int x = -1;
 			int y = 0;
+			//query result put in variable
+			int total = 0;
 			
+			while (rs.next()) {
+				total = rs.getInt("total");
+			}
+			
+			//Creation Column and Row Constraints
 			root.getColumnConstraints().addAll(colConstraint, colConstraint, colConstraint);
 			root.getRowConstraints().addAll(rowConstraint, rowConstraint, rowConstraint, rowConstraint);
 			
-			
-			while (rs.next()) {
-			total = rs.getInt("total");
-			}
-			
-			
+			//"for" loop which create all image button needed
 			for (int i = 1; i < total+1; i++) {
-
-				String sql2 = "SELECT linkImg FROM livre WHERE idLivre = "+ i +"";
+				//SQL query which research book in terms of idLivre
+				String sql2 = "SELECT titre, lieux, nbPage, anneeEd, commentaire, linkImg FROM livre WHERE idLivre = "+ i +"";
+				//put result in a ResultSet
 				ResultSet rs2 = stmt.executeQuery(sql2);
 				while (rs2.next()) {
+					titre = rs2.getString("titre");
+					lieux = rs2.getString("lieux");
+					nbPage = rs2.getInt("nbPage");
+					anneeEd = rs2.getInt("anneeEd");
+					commentaire = rs2.getString("commentaire");
 					imgf = rs2.getString("linkImg");
 				}
-				System.out.println(imgf);
+				//properties for every image
 				Image image2 = new Image(imgf);
 				ImageView im2 = new ImageView();
 				im2.setFitHeight(100);
 				im2.setFitWidth(100);
 				im2.setImage(image2);
 				
-				
+				//an if which give x and y location for every image like this : 0 0 / 1 0 / 2 0 / 0 1 / 1 1 / 1 2 / etc...
 				if (i%4 == 0) {
 					y++;
 					x = 0;
@@ -136,10 +145,17 @@ public class BibliothequeLivres {
 				}
 
 				// Use a button to show the pic that the user took
-				Button afficheImage = new Button("", im2);
-				System.out.println(x);
-				System.out.println(y);
-				root.add(afficheImage, x, y);
+				Button afficheImage$i = new Button("", im2);
+				root.add(afficheImage$i, x, y);
+				
+				afficheImage$i.setOnMouseClicked((e1) -> {
+				
+				Alert dialog = new Alert(AlertType.CONFIRMATION);
+				dialog.setTitle(titre);
+				dialog.setHeaderText("Information sur le livre: "+ titre +".");
+				dialog.setContentText("Titre de l'oeuvre: " + titre + "\n Lieux de création: " + lieux + "\n Nombre de pages: " + nbPage + "\n Année d'édition: " + anneeEd + "\n Commentaire: " + commentaire + ".");
+				dialog.showAndWait();
+				});
 
 			}
 			
