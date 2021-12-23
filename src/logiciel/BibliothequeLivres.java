@@ -5,11 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,12 +28,13 @@ public class BibliothequeLivres {
 	String login = "root";
 	String password = "";
 	Connection conn = null;
-	//properties for sql query
-	String titre = "";
-	String lieux = "";
-	int nbPage = 0;
-	int anneeEd = 0;
-	String commentaire = "";
+	int i = 0;
+	//Map for sql query
+	Map<Integer,String> titre = new HashMap<Integer,String>();
+	Map<Integer,String> lieux = new HashMap<Integer,String>();
+	Map<Integer,Integer> nbPage = new HashMap<Integer,Integer>();
+	Map<Integer,Integer> anneeEd = new HashMap<Integer,Integer>();
+	Map<Integer,String> commentaire = new HashMap<Integer,String>();
 	String imgf ="";
 
 	public GridPane pageBiblioLivres() {
@@ -115,17 +120,17 @@ public class BibliothequeLivres {
 			root.getRowConstraints().addAll(rowConstraint, rowConstraint, rowConstraint, rowConstraint);
 			
 			//"for" loop which create all image button needed
-			for (int i = 1; i < total+1; i++) {
+			for (i = 1; i < total+1; i++) {
 				//SQL query which research book in terms of idLivre
 				String sql2 = "SELECT titre, lieux, nbPage, anneeEd, commentaire, linkImg FROM livre WHERE idLivre = "+ i +"";
 				//put result in a ResultSet
 				ResultSet rs2 = stmt.executeQuery(sql2);
 				while (rs2.next()) {
-					titre = rs2.getString("titre");
-					lieux = rs2.getString("lieux");
-					nbPage = rs2.getInt("nbPage");
-					anneeEd = rs2.getInt("anneeEd");
-					commentaire = rs2.getString("commentaire");
+					titre.put(i, rs2.getString("titre"));
+					lieux.put(i, rs2.getString("lieux"));
+					nbPage.put(i, rs2.getInt("nbPage"));
+					anneeEd.put(i, rs2.getInt("anneeEd"));
+					commentaire.put(i, rs2.getString("commentaire"));
 					imgf = rs2.getString("linkImg");
 				}
 				//properties for every image
@@ -145,18 +150,18 @@ public class BibliothequeLivres {
 				}
 
 				// Use a button to show the pic that the user took
-				Button afficheImage$i = new Button("", im2);
-				root.add(afficheImage$i, x, y);
-				
-				afficheImage$i.setOnMouseClicked((e1) -> {
-				
+				Button afficheImage = new Button("", im2);
+				root.add(afficheImage, x, y);
+				//dialog pop up creation
 				Alert dialog = new Alert(AlertType.CONFIRMATION);
-				dialog.setTitle(titre);
-				dialog.setHeaderText("Information sur le livre: "+ titre +".");
-				dialog.setContentText("Titre de l'oeuvre: " + titre + "\n Lieux de création: " + lieux + "\n Nombre de pages: " + nbPage + "\n Année d'édition: " + anneeEd + "\n Commentaire: " + commentaire + ".");
-				dialog.showAndWait();
+				dialog.setTitle(titre.get(i));
+				dialog.setHeaderText("Information sur le livre: "+ titre.get(i) +".");
+				dialog.setContentText("Titre de l'oeuvre: " + titre.get(i) + "\n Lieux de création: " + lieux.get(i) + "\n Nombre de pages: " + nbPage.get(i) + "\n Année d'édition: " + anneeEd.get(i) + "\n Commentaire: " + commentaire.get(i) + ".");
+				
+				//show pop up on click
+				afficheImage.setOnMouseClicked((e) -> {
+					dialog.showAndWait();
 				});
-
 			}
 			
 
