@@ -1,50 +1,79 @@
 package logiciel;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class test {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String url = "jdbc:mysql://localhost/projet?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
-		String login = "root";
-		String password = "";
-		Connection conn = null;
-
-		try {
-
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(url, login, password);
-
-		}
-
-		catch (ClassNotFoundException e) {
-			System.err.println("Erreur de chargement");
-			e.printStackTrace();
-		}
-
-		catch (SQLException e) {
-			System.err.println("Erreur de chargement");
-			e.printStackTrace();
-		}
-
-		try {
-			Statement stmt = conn.createStatement();
-			String sql = "SELECT COUNT(idLivre) AS total FROM Livre";
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				int total = rs.getInt("total");
-				System.out.println(total);
-			}
-		} catch (SQLException e) {
-			System.err.println("Erreur de chargement");
-			e.printStackTrace();
-		}
-
-	}
-
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafx.stage.Popup;
+  
+public class test extends Application {
+  
+    // launch the application
+    public void start(Stage stage)
+    {
+  
+        // set title for the stage
+        stage.setTitle("Creating Popup");
+  
+        // create a button
+        Button button = new Button("popup");
+  
+        // create a tile pane
+        TilePane tilepane = new TilePane();
+  
+        // create a label
+        Label label = new Label("This is a Popup");
+  
+        // create a popup
+        Popup popup = new Popup();
+  
+        // set background
+        label.setStyle(" -fx-background-color: pink;");
+  
+        // add the label
+        popup.getContent().add(label);
+  
+        // set size of label
+        label.setMinWidth(80);
+        label.setMinHeight(50);
+  
+        // set auto hide
+        popup.setAutoHide(true);
+  
+        // action event
+        EventHandler<ActionEvent> event = 
+        new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                if (!popup.isShowing())
+                    popup.show(stage);
+            }
+        };
+  
+        // when button is pressed
+        button.setOnAction(event);
+  
+        // add button
+        tilepane.getChildren().add(button);
+  
+        // create a scene
+        Scene scene = new Scene(tilepane, 200, 200);
+  
+        // set the scene
+        stage.setScene(scene);
+  
+        stage.show();
+    }
+  
+    // Main Method
+    public static void main(String args[])
+    {
+  
+        // launch the application
+        launch(args);
+    }
 }
