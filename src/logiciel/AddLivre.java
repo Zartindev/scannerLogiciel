@@ -83,9 +83,9 @@ public class AddLivre {
 		root.add(prenomAuteurTF, 1, 2);
 
 		Label nombrePagesL = new Label("Nombre de pages : ");
-		// For blocking numbers of character of the TextField nombrePagesTF to 4 max
+		// For blocking numbers of character of the TextField nombrePagesTF to 3 max
 		// length
-		Pattern pattern = Pattern.compile(".{0,4}");
+		Pattern pattern = Pattern.compile(".{0,3}");
 		TextFormatter<Object> formatter = new TextFormatter<Object>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
@@ -200,6 +200,8 @@ public class AddLivre {
 		
 		// Button Ajouter Un Livre
 		ajouterFinal.setOnMouseClicked((e1) -> {
+			
+			
 
 			String nomLivre = nomLivreTF.getText(); // variable de récupération du nom du livre
 			String nomAuteur = nomAuteurTF.getText(); // variable de récupération du nom de l'auteur
@@ -214,13 +216,13 @@ public class AddLivre {
 			// test AT LEAST if the name of the book and the author, and the number of pages
 			// are completed
 			// if not then the book isnt add to the BDD
-			if (nomLivre == "" || nomAuteur == "" || nbPages == "") {
+			if (nomLivre == "" || nomAuteur == "" || nbPages == "" || img == "") {
 
 				Alert dialog = new Alert(AlertType.INFORMATION);
 				dialog.setTitle("Information d'ajout - ERREUR");
 				dialog.setHeaderText("ERREUR\nAjout non effectué.");
 				dialog.setContentText("Veuillez insérer au moins : " + "\n - Nom du livre" + "\n - Nom de l'auteur"
-						+ "\n - Nombre de pages");
+						+ "\n - Nombre de pages" + "\n - Image (png) de la couverture");
 				dialog.showAndWait();
 
 			}
