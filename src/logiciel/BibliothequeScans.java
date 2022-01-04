@@ -1,6 +1,10 @@
 package logiciel;
 
 
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
@@ -9,6 +13,15 @@ import javafx.scene.layout.RowConstraints;
 
 
 public class BibliothequeScans {
+	
+	//Database connection
+		String url = "jdbc:mysql://localhost/projet?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+		String login = "root";
+		String password = "";
+		Connection conn = null;
+		int i = 0;
+		
+		String imgf ="";
 
 	public GridPane pageBiblioScans() {
 

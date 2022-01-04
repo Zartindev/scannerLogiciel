@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,9 +46,14 @@ public class MainLog extends Application {
 	String password = "";
 	Connection conn = null;
 	
-	String img = "";
+	String imgPage = "";
 	private Desktop desktop = Desktop.getDesktop();
-	String nomLivreSql = "";
+	// String nomLivreSql = "";
+	
+	
+	Map<Integer,String> nomLivreSql = new HashMap<Integer,String>();
+	
+	int i =0 ;
 	
 
 	public static void main(String[] args) {
@@ -136,7 +143,7 @@ public class MainLog extends Application {
 		Label textChoseBook = new Label("      Choississez le livre \ncorrespondant à la page :");
 		Visuals.visualLabelsRed(textChoseBook);
 
-		Button scanner = new Button("Scanné votre page");
+		Button scannerPage = new Button("Scanné votre page");
 		
 
 		// PLACEMENT horizontals/verticals of the elements (center in grid box)
@@ -159,9 +166,9 @@ public class MainLog extends Application {
 		GridPane.setValignment(textChoseBook, VPos.BOTTOM);
 		root.add(textChoseBook, 1, 1);
 		
-		root.add(scanner, 1, 2);
-		GridPane.setHalignment(scanner, HPos.CENTER);
-		Visuals.visualAdminButtons(scanner);
+		root.add(scannerPage, 1, 2);
+		GridPane.setHalignment(scannerPage, HPos.CENTER);
+		Visuals.visualAdminButtons(scannerPage);
 		
 		
 // CHOICEBOX ----------------------------------------------------------------------------------->	
@@ -201,14 +208,85 @@ public class MainLog extends Application {
 			}
 			
 			
-			for (int i = 1; i < total+1; i++) {
+			for ( i = 1; i < total+1; i++) {
 
 				String sql2 = "SELECT titre FROM livre WHERE idLivre = "+ i +"";
 				ResultSet rs2 = stmt.executeQuery(sql2);
 				while (rs2.next()) {
-					nomLivreSql= rs2.getString("titre");
-					choiceBox.getItems().add(nomLivreSql);
+					nomLivreSql.put(i,rs2.getString("titre"));
+					choiceBox.getItems().add(nomLivreSql.get(i));
+					
 				}
+				
+				
+				scannerPage.setOnMouseClicked((e1) -> {
+					
+					
+					// This variable take the index of where the user click on the book's name 
+					int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex() + 1;
+
+					System.out.println(selectedIndex);
+					
+					
+					
+					//---------------------------
+									
+									// test if the name of the book and the pic is not empty
+									// if not then the page isnt add to the BDD
+									if ( imgPage == "") {
+
+										Alert dialog = new Alert(AlertType.INFORMATION);
+										dialog.setTitle("Information d'ajout - ERREUR");
+										dialog.setHeaderText("ERREUR\nAjout non effectué.");
+										dialog.setContentText(">>>>>>>>>>En travaux<<<<<<<<<<<");
+										dialog.showAndWait();
+
+									}
+
+									else {
+
+										try {
+
+											Class.forName("com.mysql.cj.jdbc.Driver");
+											conn = DriverManager.getConnection(url, login, password);
+
+										}
+
+										catch (ClassNotFoundException e) {
+											System.err.println("Erreur de chargement");
+											e.printStackTrace();
+										}
+
+										catch (SQLException e) {
+											System.err.println("Erreur de chargement");
+											e.printStackTrace();
+										}
+										try { // ajout des entrées qui sont les txtbox, dans la BDD a l'aide des requetes
+												// INSERT INTO
+											Statement stmt2 = conn.createStatement();
+											conn.setAutoCommit(false);
+											stmt2.addBatch(
+													"INSERT INTO `page` (`idPage`,`img`,`idLivre`) VALUES (null,'" + imgPage + "'," + selectedIndex + ")");
+											stmt2.executeBatch();
+											conn.commit();
+											conn.setAutoCommit(true);
+											
+											Alert dialog = new Alert(AlertType.INFORMATION);
+											dialog.setTitle("Information d'ajout - REUSSI");
+											dialog.setHeaderText("REUSSI\nAjout effectué.");
+											// Add the name of the book in the message which had an UpperCase
+											dialog.setContentText(
+													"Votre page lien : " + imgPage + " \na bien été ajouté a \nvotre bibliothéque d'analyses.");
+											dialog.showAndWait();
+										} catch (SQLException e) {
+											System.err.println("Erreur de chargement");
+											e.printStackTrace();
+										}
+								
+
+									}
+
+								});
 				
 			}
 			
@@ -283,16 +361,8 @@ public class MainLog extends Application {
 		
 
 		});
-		
-		
-		scanner.setOnMouseClicked((e) -> {
-			Alert dialog = new Alert(AlertType.INFORMATION);
-			dialog.setTitle("Information d'ajout - ERREUR");
-			dialog.setHeaderText("ERREUR\nAjout non effectué.");
-			dialog.setContentText(">>>>>>>>>>En travaux<<<<<<<<<<<");
-			dialog.showAndWait();
-
-		});
+			
+				
 		
 		refresh.setOnMouseClicked((e) -> {
 			// System.exit(0);
@@ -331,7 +401,7 @@ public class MainLog extends Application {
 							// for using it and dispay it under the button openButton
 							String fileContenu = "file:///" + file.getAbsolutePath();
 							String newFileContenu = fileContenu.replace('\\', '/');
-							img = newFileContenu;
+							imgPage = newFileContenu;
 							// changer ici les antislash en slash
 							Image image2 = new Image(newFileContenu);
 							ImageView im2 = new ImageView();
@@ -355,6 +425,8 @@ public class MainLog extends Application {
 						}
 					}
 				});
+				
+				
 				
 				
 
