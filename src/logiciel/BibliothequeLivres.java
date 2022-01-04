@@ -7,13 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Cell;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +31,7 @@ public class BibliothequeLivres {
 	String login = "root";
 	String password = "";
 	Connection conn = null;
+	private Label label;
 	int i = 0;
 	//Map for sql query
 	Map<Integer,String> titre = new HashMap<Integer,String>();
@@ -157,10 +161,29 @@ public class BibliothequeLivres {
 				dialog.setTitle(titre.get(i));
 				dialog.setHeaderText("Information sur le livre: "+ titre.get(i) +".");
 				dialog.setContentText("Titre de l'oeuvre: " + titre.get(i) + "\n Lieux de création: " + lieux.get(i) + "\n Nombre de pages: " + nbPage.get(i) + "\n Année d'édition: " + anneeEd.get(i) + "\n Commentaire: " + commentaire.get(i) + ".");
-				
 				//show pop up on click
 				afficheImage.setOnMouseClicked((e) -> {
-					dialog.showAndWait();
+					ButtonType ok = new ButtonType("ok");
+					ButtonType Supprimer = new ButtonType("Supprimer");
+					ButtonType Annuler = new ButtonType("Annuler");
+					
+					// Remove default ButtonTypes
+					dialog.getButtonTypes().clear();
+					
+					dialog.getButtonTypes().addAll(ok, Supprimer, Annuler);
+					
+					// option != null.
+					Optional<ButtonType> option = dialog.showAndWait();
+					
+					if (option.get() == null) {
+					} else if (option.get() == ok) {
+					} else if (option.get() == Supprimer) {
+						//String sql3 = "DELETE FROM `livre` WHERE `livre`.`idLivre` = 1";
+						//ResultSet rs3 = stmt.executeQuery(sql3);
+					} else if (option.get() == Annuler) {
+					} else {
+						this.label.setText("-");
+					}
 				});
 			}
 			
