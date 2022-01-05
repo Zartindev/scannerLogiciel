@@ -211,7 +211,7 @@ public class BibliothequeScans {
 									
 									Scene sceneBiblio = new Scene(tableau.buildData(), 600, 300, Color.BEIGE);
 									Stage stageBiblio = new Stage();
-									stageBiblio.setTitle("BIBLIOTHEQUE DES LIVRES");
+									stageBiblio.setTitle("Tableau des mesures");
 									stageBiblio.setScene(sceneBiblio);
 									stageBiblio.setMinWidth(600);
 									stageBiblio.setMinHeight(900);
