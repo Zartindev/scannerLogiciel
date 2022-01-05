@@ -43,6 +43,12 @@ public class Visuals extends MainLog {
 			label.setMinHeight(20);
 			label.setStyle(visualLabelBlack());
 		}
+		
+		public static void visualLabelsNameBook(Label label) {
+
+			label.setMinHeight(20);
+			label.setStyle(visualLabelNameBook());
+		}
 
 		/**
 		 * Return all the visual CSS characteristics of main Buttons.
@@ -74,6 +80,11 @@ public class Visuals extends MainLog {
 		public static String visualLabelBlack() {
 
 			return "-fx-font-weight: bold; " + "-fx-font-size: 15;";
+		}
+		
+		public static String visualLabelNameBook() {
+
+			return "-fx-font-weight: bold; " + "-fx-text-fill: #b33939 ; " + "-fx-font-size: 22;";
 		}
 
 

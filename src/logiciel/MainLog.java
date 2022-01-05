@@ -311,10 +311,12 @@ public class MainLog extends Application {
 			 * {@link logiciel.BibliothequeLivres#pageBiblioLivres()} Create a new scene
 			 * when libraryBooks is clicked, and open the class BibliothequeLivres
 			 */
-			Scene sceneBiblio = new Scene(biblio.pageBiblioLivres(), 800, 500, Color.BEIGE);
+			Scene sceneBiblio = new Scene(biblio.pageBiblioLivres(), 1550, 900, Color.BEIGE);
 			Stage stageBiblio = new Stage();
 			stageBiblio.setTitle("BIBLIOTHEQUE DES LIVRES");
 			stageBiblio.setScene(sceneBiblio);
+			stageBiblio.setMinWidth(600);
+			stageBiblio.setMinHeight(900);
 			stageBiblio.show();
 
 		});

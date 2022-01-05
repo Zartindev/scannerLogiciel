@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,6 +45,15 @@ public class BibliothequeLivres {
 	public GridPane pageBiblioLivres() {
 
 		GridPane root = new GridPane();
+		
+		
+		// doesn't work but we wanted to add a scrollpane in function of the number of pages added
+//		ScrollPane scrollPane = new ScrollPane(root);
+//	    scrollPane.setPrefSize(200, 400);
+//	    scrollPane.setContent(root);
+//	    scrollPane.setFitToHeight(true);
+//	    scrollPane.setPannable(true);
+//	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
 		root.setGridLinesVisible(true);
 
@@ -61,7 +71,7 @@ public class BibliothequeLivres {
 		// space between each bloc of the grid, Horizontal and vertical
 		root.setHgap(25);
 		root.setVgap(15);
-
+		
 		// set visible the lign of the grid (remove at the end)
 		root.setGridLinesVisible(true);
 
@@ -71,7 +81,7 @@ public class BibliothequeLivres {
 		// set size Width of the grid, which ajust with the size of the scene
 		colConstraint.setPercentWidth(50);
 		root.setMaxWidth(Double.MAX_VALUE);
-		colConstraint.setHalignment(HPos.LEFT);
+		colConstraint.setHalignment(HPos.CENTER);
 		// [useless?] colConstraint.setHgrow(Priority.ALWAYS);
 
 		RowConstraints rowConstraint = new RowConstraints();
@@ -110,7 +120,7 @@ public class BibliothequeLivres {
 			String sql = "SELECT COUNT(idLivre) AS total FROM Livre";
 			ResultSet rs = stmt.executeQuery(sql);
 			//location for root img
-			int x = -1;
+			int x = 0;
 			int y = 0;
 			//query result put in variable
 			int total = 0;
@@ -138,24 +148,37 @@ public class BibliothequeLivres {
 					imgf = rs2.getString("linkImg");
 				}
 				//properties for every image
+				
+				Label labelTitre = new Label(titre.get(i));
+				Visuals.visualLabelsNameBook(labelTitre);
 				Image image2 = new Image(imgf);
 				ImageView im2 = new ImageView();
-				im2.setFitHeight(100);
-				im2.setFitWidth(100);
+				im2.setFitHeight(180);
+				im2.setFitWidth(150);
 				im2.setImage(image2);
 				
+				// Use a button to show the pic that the user took
+				Button afficheImage = new Button("", im2);
+				root.add(afficheImage, x, y);
+				root.add(labelTitre, x, y);
+				GridPane.setHalignment(labelTitre, HPos.LEFT);
+				GridPane.setHalignment(afficheImage, HPos.RIGHT);
+				
 				//an if which give x and y location for every image like this : 0 0 / 1 0 / 2 0 / 0 1 / 1 1 / 1 2 / etc...
-				if (i%4 == 0) {
+				if (i%3 == 0) {
 					y++;
 					x = 0;
 				}
 				else {
 				x++;
 				}
+				
+				System.out.println("i =" + i);
+				System.out.println("x = " + x);
+				System.out.println("y = " +y);
+				System.out.println();
 
-				// Use a button to show the pic that the user took
-				Button afficheImage = new Button("", im2);
-				root.add(afficheImage, x, y);
+				
 				//dialog pop up creation
 				Alert dialog = new Alert(AlertType.CONFIRMATION);
 				dialog.setTitle(titre.get(i));
