@@ -55,7 +55,6 @@ public class BibliothequeLivres {
 //	    scrollPane.setPannable(true);
 //	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-		root.setGridLinesVisible(true);
 
 //		AtomicInteger rowCount = new AtomicInteger();
 //		Button addRow = new Button("Add Row");
@@ -73,7 +72,7 @@ public class BibliothequeLivres {
 		root.setVgap(15);
 		
 		// set visible the lign of the grid (remove at the end)
-		root.setGridLinesVisible(true);
+		root.setGridLinesVisible(false);
 
 		// set colum's size of the grid
 		ColumnConstraints colConstraint = new ColumnConstraints();
@@ -161,8 +160,8 @@ public class BibliothequeLivres {
 				Button afficheImage = new Button("", im2);
 				root.add(afficheImage, x, y);
 				root.add(labelTitre, x, y);
-				GridPane.setHalignment(labelTitre, HPos.LEFT);
-				GridPane.setHalignment(afficheImage, HPos.RIGHT);
+				GridPane.setHalignment(labelTitre, HPos.CENTER);
+				GridPane.setHalignment(afficheImage, HPos.LEFT);
 				
 				//an if which give x and y location for every image like this : 0 0 / 1 0 / 2 0 / 0 1 / 1 1 / 1 2 / etc...
 				if (i%3 == 0) {

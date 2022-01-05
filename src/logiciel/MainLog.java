@@ -287,7 +287,7 @@ public class MainLog extends Application {
 											dialog.setHeaderText("REUSSI\nAjout effectué.");
 											// Add the name of the book in the message which had an UpperCase
 											dialog.setContentText(
-													"Votre page lien : " + imgPage + " \na bien été ajouté a \nvotre bibliothéque d'analyses.");
+													"Votre page : \" " + imgPage + " \" \na bien été ajouté a votre bibliothéque d'analyses.");
 											dialog.showAndWait();
 										} catch (SQLException e) {
 											System.err.println("Erreur de chargement");
