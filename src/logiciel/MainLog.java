@@ -271,6 +271,10 @@ public class MainLog extends Application {
 											conn.commit();
 											conn.setAutoCommit(true);
 											
+											
+											//Creer un scan d'une image demande avec son lien d'image et l'id Livre normalement
+											AddScan addScan = new AddScan(imgPage,selectedIndex);
+											
 											Alert dialog = new Alert(AlertType.INFORMATION);
 											dialog.setTitle("Information d'ajout - REUSSI");
 											dialog.setHeaderText("REUSSI\nAjout effectué.");
@@ -399,7 +403,7 @@ public class MainLog extends Application {
 							;
 							// get the link of the pic, and add it in a string fileContenu
 							// for using it and dispay it under the button openButton
-							String fileContenu = "file:///" + file.getAbsolutePath();
+							String fileContenu = ""+ file.getAbsolutePath();
 							String newFileContenu = fileContenu.replace('\\', '/');
 							imgPage = newFileContenu;
 							// changer ici les antislash en slash
