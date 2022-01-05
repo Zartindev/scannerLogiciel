@@ -43,7 +43,7 @@ public class CCLabeler {
     }
 
 
-    private MeasuresList getCCInformations(ResultsTable data) {
+    private MeasuresList getCCInformations(ResultsTable data, int idPage) {
         // allocation structure
         MeasuresList measures_list = new MeasuresList(this.image_name);
         // recupère les données dans des tableaux
@@ -57,7 +57,7 @@ public class CCLabeler {
 
         // parcours des résultats
         for (int idx = 0; idx < cenx.length; idx++) {
-            Measure measure = new Measure(area[idx], cenx[idx], ceny[idx], (int)xmin[idx], (int)ymin[idx], (int)width[idx], (int)height[idx]);
+            Measure measure = new Measure(area[idx], cenx[idx], ceny[idx], (int)xmin[idx], (int)ymin[idx], (int)width[idx], (int)height[idx], idPage);
             measures_list.add(measure);
         }
         this.measures_list = measures_list;
@@ -119,7 +119,7 @@ public class CCLabeler {
      * Inventorie toutes les composantes de l'image, en vue de les compter.
      *
      */
-    public void process(String image_name) {
+    public void process(String image_name,int idPage) {
 
         this.image_name = image_name;
         // Load photo
@@ -134,7 +134,7 @@ public class CCLabeler {
         ResultsTable data = findParticles(imBinary);
 
         // acquisition des mesures
-        MeasuresList measure_list = getCCInformations(data);
+        MeasuresList measure_list = getCCInformations(data, idPage);
 
         // affiche les mesures
        // System.out.println(measure_list);

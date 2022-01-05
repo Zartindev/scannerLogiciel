@@ -15,8 +15,9 @@ public class Measure {
 	private int ystart;	        // bounding box coord y min
 	private int width;	        // bounding box largeur
 	private int height;	        // bounding box hauteur
+	private int idPage;
 
-	public Measure(double aire, double centrex, double centrey, int xstart, int ystart, int width, int height) {
+	public Measure(double aire, double centrex, double centrey, int xstart, int ystart, int width, int height, int idPage) {
 		this.setAire(aire);
 		this.setCentre_x(centrex);
 		this.setCentre_y(centrey);
@@ -24,6 +25,7 @@ public class Measure {
 		this.setYstart(ystart);
 		this.setWidth(width);
 		this.setHeight(height);
+		this.idPage=idPage;
 	}
 
 	public int getXstart() {
@@ -84,6 +86,6 @@ public class Measure {
 
 	@Override
 	public String toString() {
-		return "(null,'" + aire + "','" + centre_x + "','" + centre_y + "','" + xstart + "','" + ystart + "','" + width +"','"+height+ "','"+1+"')\n";
+		return "(null,'" + aire + "','" + centre_x + "','" + centre_y + "','" + xstart + "','" + ystart + "','" + width +"','"+height+ "','"+idPage+"')\n";
 	       }
 }
