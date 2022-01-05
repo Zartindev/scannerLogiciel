@@ -19,6 +19,8 @@ public class AddScan {
 	
 	
 	public AddScan(String fileContenu,int idPage) {
+		
+		//start the analyse of the image
 		MeasuresList List_Insert = null;
 		System.out.println(idPage);
 		ImagesToProcessList ipl = new ImagesToProcessList();
