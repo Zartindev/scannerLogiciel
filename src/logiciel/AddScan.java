@@ -26,17 +26,16 @@ public class AddScan {
 		ipl.addImageName(fileContenu);
 		CCLabeler counter = new CCLabeler();
 		for (Object o : ipl) {
-			// traite l'image et compte les particules
+			// processes the image and counts the particles
 			String imagename_to_process = (String) o;
 			counter.process(imagename_to_process);
 		}
-		// recupère les mesures de l'image traitée
+		
+		// get back the measure and convert it to a String without "[" and "]" char
 		List_Insert = counter.getMeasures();
 		String newList_Insert = (""+List_Insert);
 		newList_Insert=newList_Insert.substring(1);
 		newList_Insert = newList_Insert.substring(0, newList_Insert.length()-1);
-		//newList_Insert.replace('[', ' ');
-		//newList_Insert.replace(']', ' ');
 		System.out.println(newList_Insert);
 		try {
 
