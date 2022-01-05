@@ -2,10 +2,14 @@ package logiciel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> au_cas_ou
 import app.*;
 
 public class AddScan {
@@ -19,15 +23,18 @@ public class AddScan {
 
 	
 	
-	public AddScan(String fileContenu,int idLivre) {
+	public AddScan(String fileContenu,int idPage) {
+		
+		//start the analyse of the image
 		MeasuresList List_Insert = null;
+		System.out.println(idPage);
 		ImagesToProcessList ipl = new ImagesToProcessList();
 		ipl.addImageName(fileContenu);
 		CCLabeler counter = new CCLabeler();
 		for (Object o : ipl) {
 			// processes the image and counts the particles
 			String imagename_to_process = (String) o;
-			counter.process(imagename_to_process);
+			counter.process(imagename_to_process,idPage);
 		}
 		
 		// get back the measure and convert it to a String without "[" and "]" char

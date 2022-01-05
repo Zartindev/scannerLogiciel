@@ -271,9 +271,16 @@ public class MainLog extends Application {
 											conn.commit();
 											conn.setAutoCommit(true);
 											
-											
-											//Creer un scan d'une image demande avec son lien d'image et l'id Livre normalement
-											AddScan addScan = new AddScan(imgPage,selectedIndex);
+											// get the idPage for connected it with the measures in the DB
+											String sql3 = "SELECT MAX(idPage) AS max FROM page";
+											ResultSet rs3 = stmt2.executeQuery(sql3);
+											int idPage=0;
+											while (rs3.next()) {
+												idPage = rs3.getInt("max");
+											}
+											System.out.println(idPage);
+											//Creer un scan d'une image demande avec son lien d'image et l'id Page
+											AddScan addScan = new AddScan(imgPage,idPage);
 											
 											Alert dialog = new Alert(AlertType.INFORMATION);
 											dialog.setTitle("Information d'ajout - REUSSI");
