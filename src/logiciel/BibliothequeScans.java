@@ -180,10 +180,13 @@ public class BibliothequeScans {
 
 				// show pop up on click
 				afficheImage.setOnMouseClicked((e) -> {
+					//button initialisation for pop up
 					ButtonType ok = new ButtonType("ok");
 					ButtonType Supprimer = new ButtonType("Supprimer");
 					ButtonType Annuler = new ButtonType("Annuler");
+					
 					HBox dialogPaneContent = new HBox();
+					
 					for (int z = 1; z < total2 + 1; z++) {
 
 						try {
