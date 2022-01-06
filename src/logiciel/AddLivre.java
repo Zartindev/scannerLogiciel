@@ -46,7 +46,7 @@ public class AddLivre {
 	/** Create a Grid with informations to add 
 	 * and put the Livre to the DB 
 	 * 
-	 * @return
+	 * @return root
 	 */
 	
 	public GridPane pageAddLivre() {

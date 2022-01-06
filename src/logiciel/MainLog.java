@@ -99,8 +99,6 @@ public class MainLog extends Application {
 		RowConstraints rowConstraint = new RowConstraints();
 		// set size Height of the grid, which ajust with the size of the scene
 		rowConstraint.setPercentHeight(50);
-		// [useless?] rowConstraint.setValignment(VPos.CENTER);
-		// [useless?] rowConstraint.setVgrow(Priority.ALWAYS);
 
 		// add constraints for columns and rows
 		root.getColumnConstraints().addAll(colConstraint, colConstraint, colConstraint);
@@ -241,7 +239,7 @@ public class MainLog extends Application {
 										Alert dialog = new Alert(AlertType.INFORMATION);
 										dialog.setTitle("Information d'ajout - ERREUR");
 										dialog.setHeaderText("ERREUR\nAjout non effectué.");
-										dialog.setContentText(">>>>>>>>>>En travaux<<<<<<<<<<<");
+										dialog.setContentText("Veuillez choisir un livre, et une image pour votre page.");
 										dialog.showAndWait();
 
 									}
@@ -333,10 +331,12 @@ public class MainLog extends Application {
 			 * {@link logiciel.BibliothequeLivres#pageBiblioLivres()} Create a new scene
 			 * when libraryBooks is clicked, and open the class BibliothequeLivres
 			 */
-			Scene sceneBiblioS = new Scene(biblioS.pageBiblioScans(), 800, 500, Color.BEIGE);
+			Scene sceneBiblioS = new Scene(biblioS.pageBiblioScans(), 1550, 900, Color.BEIGE);
 			Stage stageBiblioS = new Stage();
 			stageBiblioS.setTitle("TABLEAU DES MESURES SCANNÉES");
 			stageBiblioS.setScene(sceneBiblioS);
+			stageBiblioS.setMinWidth(600);
+			stageBiblioS.setMinHeight(900);
 			stageBiblioS.show();
 
 		});

@@ -59,15 +59,6 @@ public class BibliothequeLivres {
 //	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
 
-//		AtomicInteger rowCount = new AtomicInteger();
-//		Button addRow = new Button("Add Row");
-//		addRow.setOnAction( e-> root.addRow(rowCount.getAndIncrement(),
-//		        new Label("Row" + (rowCount.get()-1) + " Col1"),
-//		        new Label("Row" + (rowCount.get()-1) + " Col2")));
-//		
-//		GridPane.setHalignment(addRow, HPos.CENTER);
-//		root.add(addRow, 0, 0);
-
 		// space between border and grid
 		root.setPadding(new Insets(50));
 		// space between each bloc of the grid, Horizontal and vertical

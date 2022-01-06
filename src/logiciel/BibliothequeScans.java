@@ -58,16 +58,6 @@ public class BibliothequeScans {
 
 		GridPane root = new GridPane();
 
-		root.setGridLinesVisible(true);
-
-//		AtomicInteger rowCount = new AtomicInteger();
-//		Button addRow = new Button("Add Row");
-//		addRow.setOnAction( e-> root.addRow(rowCount.getAndIncrement(),
-//		        new Label("Row" + (rowCount.get()-1) + " Col1"),
-//		        new Label("Row" + (rowCount.get()-1) + " Col2")));
-//		
-//		GridPane.setHalignment(addRow, HPos.CENTER);
-//		root.add(addRow, 0, 0);
 
 		// space between border and grid
 		root.setPadding(new Insets(50));
@@ -76,7 +66,7 @@ public class BibliothequeScans {
 		root.setVgap(15);
 
 		// set visible the lign of the grid (remove at the end)
-		root.setGridLinesVisible(true);
+		root.setGridLinesVisible(false);
 
 		// set colum's size of the grid
 		ColumnConstraints colConstraint = new ColumnConstraints();
@@ -85,15 +75,11 @@ public class BibliothequeScans {
 		colConstraint.setPercentWidth(50);
 		root.setMaxWidth(Double.MAX_VALUE);
 		colConstraint.setHalignment(HPos.LEFT);
-		// [useless?] colConstraint.setHgrow(Priority.ALWAYS);
 
 		RowConstraints rowConstraint = new RowConstraints();
 		// set size Height of the grid, which ajust with the size of the scene
 		rowConstraint.setPercentHeight(50);
-		// [useless?] rowConstraint.setValignment(VPos.CENTER);
-		// [useless?] rowConstraint.setVgrow(Priority.ALWAYS);
-
-		// add constraints for columns and rows
+	
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		// try catch for database connection
@@ -155,14 +141,21 @@ public class BibliothequeScans {
 					imgf = rs2.getString("linkImg");
 				}
 				// properties for every image
+
+				Label labelTitre = new Label(titre.get(i));
+				Visuals.visualLabelsNameBook(labelTitre);
 				Image image2 = new Image(imgf);
 				ImageView im2 = new ImageView();
-				im2.setFitHeight(100);
-				im2.setFitWidth(100);
+				im2.setFitHeight(180);
+				im2.setFitWidth(150);
 				im2.setImage(image2);
+				
 				// Use a button to show the pic that the user took
 				Button afficheImage = new Button("", im2);
 				root.add(afficheImage, x, y);
+				root.add(labelTitre, x, y);
+				GridPane.setHalignment(labelTitre, HPos.CENTER);
+				GridPane.setHalignment(afficheImage, HPos.LEFT);
 
 				// an if which give x and y location for every image like this : 0 0 / 1 0 / 2 0
 				// / 0 1 / 1 1 / 1 2 / etc...
