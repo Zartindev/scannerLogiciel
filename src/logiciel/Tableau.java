@@ -1,7 +1,5 @@
 package logiciel;
 
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,9 +19,11 @@ public class Tableau{
 
     //TABLE VIEW AND DATA
     private ObservableList<ObservableList> data;
-
-  
-
+    
+    /** Create a tableview and add all the measures of the Page 
+     * 
+     * @return Display a tableview with all the measures
+     */
     //CONNECTION DATABASE
     public TableView buildData(){
     	TableView tableview = new TableView();
@@ -32,6 +32,7 @@ public class Tableau{
     	String password = "";
     	Connection conn = null;
           data = FXCollections.observableArrayList();
+          // try catch connexion to DB
           try{
         	Class.forName("com.mysql.cj.jdbc.Driver");
   			conn = DriverManager.getConnection(url, login, password);

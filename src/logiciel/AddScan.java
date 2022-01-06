@@ -1,12 +1,10 @@
 package logiciel;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import app.*;
 
 public class AddScan {
@@ -19,10 +17,14 @@ public class AddScan {
 	
 
 	
-	
+	/** Analyze a picture and put it in the DB
+	 * 
+	 * @param fileContenu String of the url of the picture
+	 * @param idPage id of the picture for adding it to the DB
+	 */
 	public AddScan(String fileContenu,int idPage) {
 		
-		//start the analyse of the image
+		//start the analyse of the picture
 		MeasuresList List_Insert = null;
 		System.out.println(idPage);
 		ImagesToProcessList ipl = new ImagesToProcessList();
@@ -34,12 +36,14 @@ public class AddScan {
 			counter.process(imagename_to_process,idPage);
 		}
 		
-		// get back the measure and convert it to a String without "[" and "]" char
+		// get back the measures and convert it to a String without "[" and "]" char
 		List_Insert = counter.getMeasures();
 		String newList_Insert = (""+List_Insert);
 		newList_Insert=newList_Insert.substring(1);
 		newList_Insert = newList_Insert.substring(0, newList_Insert.length()-1);
 		System.out.println(newList_Insert);
+		
+		// Connection to the DB
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -47,18 +51,16 @@ public class AddScan {
 			System.out.println("test connexion BD oui");
 
 		}
-
 		catch (ClassNotFoundException e) {
 			System.err.println("Erreur de chargement");
 			e.printStackTrace();
 		}
-
 		catch (SQLException e) {
 			System.err.println("Erreur de chargement");
 			e.printStackTrace();
 		}
-		try { // ajout des entrées qui sont les txtbox, dans la BDD a l'aide des requetes
-				// INSERT INTO
+		try {
+			// Insert the data in the DB
 			Statement stmt = conn.createStatement();
 			conn.setAutoCommit(false);
 			stmt.addBatch("INSERT INTO `mesure_caractere` (`idMesure`, `aire`, `centreX`, `centreY`, `Xstart`, `Ystart`, `width`,`height`,`idPage`) VALUES "+newList_Insert);

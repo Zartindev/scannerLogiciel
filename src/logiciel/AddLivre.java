@@ -42,7 +42,13 @@ public class AddLivre {
 	String img = "";
 
 	private Desktop desktop = Desktop.getDesktop();
-
+	
+	/** Create a Grid with informations to add 
+	 * and put the Livre to the DB 
+	 * 
+	 * @return
+	 */
+	
 	public GridPane pageAddLivre() {
 
 		GridPane root = new GridPane();
@@ -201,8 +207,6 @@ public class AddLivre {
 		// Button Ajouter Un Livre
 		ajouterFinal.setOnMouseClicked((e1) -> {
 			
-			
-
 			String nomLivre = nomLivreTF.getText(); // variable de récupération du nom du livre
 			String nomAuteur = nomAuteurTF.getText(); // variable de récupération du nom de l'auteur
 			String annee = anneeTF.getText(); // variable de récupération de l'année
@@ -283,14 +287,17 @@ public class AddLivre {
 		});
 
 		System.out.println(img);
-
 		root.add(openApic, 2, 2);
 		root.getRowConstraints().addAll(rowConstraint, rowConstraint, rowConstraint, rowConstraint);
 
 		return root;
 
 	}
-
+	
+	/** Open a file
+	 * 
+	 * @param file
+	 */
 	private void openFile(File file) {
 		try {
 			desktop.open(file);

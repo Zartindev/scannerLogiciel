@@ -55,7 +55,10 @@ public class MainLog extends Application {
 	
 	int i =0 ;
 	
-
+	/** launch the application
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Application.launch(args);
 
@@ -244,25 +247,22 @@ public class MainLog extends Application {
 									}
 
 									else {
-
+										//connexion with the DB
 										try {
-
 											Class.forName("com.mysql.cj.jdbc.Driver");
 											conn = DriverManager.getConnection(url, login, password);
 
 										}
-
 										catch (ClassNotFoundException e) {
 											System.err.println("Erreur de chargement");
 											e.printStackTrace();
 										}
-
 										catch (SQLException e) {
 											System.err.println("Erreur de chargement");
 											e.printStackTrace();
 										}
-										try { // ajout des entrées qui sont les txtbox, dans la BDD a l'aide des requetes
-												// INSERT INTO
+										try { 
+											//Add the picture in the DB
 											Statement stmt2 = conn.createStatement();
 											conn.setAutoCommit(false);
 											stmt2.addBatch(
@@ -278,10 +278,8 @@ public class MainLog extends Application {
 											while (rs3.next()) {
 												idPage = rs3.getInt("max");
 											}
-											System.out.println(idPage);
-											//Creer un scan d'une image demande avec son lien d'image et l'id Page
+											//Create an addScan of a requested picture
 											AddScan addScan = new AddScan(imgPage,idPage);
-											
 											Alert dialog = new Alert(AlertType.INFORMATION);
 											dialog.setTitle("Information d'ajout - REUSSI");
 											dialog.setHeaderText("REUSSI\nAjout effectué.");

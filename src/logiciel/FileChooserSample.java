@@ -21,7 +21,10 @@ import javafx.stage.Stage;
 public final class FileChooserSample extends Application {
  
     private Desktop desktop = Desktop.getDesktop();
- 
+    
+    /**
+     * 
+     */
     @Override
     public void start(final Stage stage) {
         stage.setTitle("File Chooser Sample");
@@ -58,11 +61,18 @@ public final class FileChooserSample extends Application {
         stage.setScene(new Scene(rootGroup));
         stage.show();
     }
- 
+    /**
+     * launch the application
+     * @param args
+     */
     public static void main(String[] args) {
         Application.launch(args);
     }
- 
+    
+    /** Open a file
+     * 
+     * @param file
+     */
     private void openFile(File file) {
         try {
             desktop.open(file);

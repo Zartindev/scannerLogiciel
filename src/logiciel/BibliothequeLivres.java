@@ -42,6 +42,12 @@ public class BibliothequeLivres {
 	Map<Integer,String> commentaire = new HashMap<Integer,String>();
 	String imgf ="";
 
+	
+	
+	/** Display a grid with all the books in the DB
+	 * 
+	 * @return Grid of all the books
+	 */
 	public GridPane pageBiblioLivres() {
 
 		GridPane root = new GridPane();
@@ -172,10 +178,6 @@ public class BibliothequeLivres {
 				x++;
 				}
 				
-				System.out.println("i =" + i);
-				System.out.println("x = " + x);
-				System.out.println("y = " +y);
-				System.out.println();
 
 				
 				//dialog pop up creation
