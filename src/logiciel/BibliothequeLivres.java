@@ -172,10 +172,6 @@ public class BibliothequeLivres {
 				x++;
 				}
 				
-				System.out.println("i =" + i);
-				System.out.println("x = " + x);
-				System.out.println("y = " +y);
-				System.out.println();
 
 				
 				//dialog pop up creation

@@ -42,7 +42,9 @@ public class BibliothequeScans {
 	Connection conn = null;
 	private Label label;
 	int i = 0;
+	int z = 0;
 	String imglink = "";
+	int idPages;
 	int total = 0;
 	int total2 = 0;
 	// Map for sql query
@@ -142,16 +144,11 @@ public class BibliothequeScans {
 			// "for" loop which create all image button needed
 			for (i = 1; i < total + 1; i++) {
 				// SQL query which research book in terms of idLivre
-				String sql2 = "SELECT titre, lieux, nbPage, anneeEd, commentaire, linkImg FROM livre WHERE idLivre = "
-						+ i + "";
+				String sql2 = "SELECT linkImg, titre FROM livre WHERE idLivre = " + i + "";
 				// put result in a ResultSet
 				ResultSet rs2 = stmt.executeQuery(sql2);
 				while (rs2.next()) {
 					titre.put(i, rs2.getString("titre"));
-					lieux.put(i, rs2.getString("lieux"));
-					nbPage.put(i, rs2.getInt("nbPage"));
-					anneeEd.put(i, rs2.getInt("anneeEd"));
-					commentaire.put(i, rs2.getString("commentaire"));
 					imgf = rs2.getString("linkImg");
 				}
 				// properties for every image
@@ -161,8 +158,8 @@ public class BibliothequeScans {
 				im2.setFitWidth(100);
 				im2.setImage(image2);
 				// Use a button to show the pic that the user took
-				Button afficheImage = new Button("", im2);
-				root.add(afficheImage, x, y);
+				Button buttonLivre = new Button("", im2);
+				root.add(buttonLivre, x, y);
 
 				// an if which give x and y location for every image like this : 0 0 / 1 0 / 2 0
 				// / 0 1 / 1 1 / 1 2 / etc...
@@ -179,61 +176,70 @@ public class BibliothequeScans {
 				dialog.setHeaderText("Liste des pages du livre : " + titre.get(i) + ".");
 
 				// show pop up on click
-				afficheImage.setOnMouseClicked((e) -> {
+				buttonLivre.setOnMouseClicked((e) -> {
+
 					ButtonType ok = new ButtonType("ok");
 					ButtonType Supprimer = new ButtonType("Supprimer");
 					ButtonType Annuler = new ButtonType("Annuler");
-					HBox dialogPaneContent = new HBox();
-					for (int z = 1; z < total2 + 1; z++) {
 
-						try {
-							String sql3 = "SELECT img FROM Page WHERE idPage = " + z + "";
+					try {
+
+						for (z = 1; z < total2 + 1; z++) {
+							String sql3 = "SELECT img FROM Page WHERE idLivre = " + z + "";
+
 							// put result in a ResultSet
 							ResultSet rs3 = stmt.executeQuery(sql3);
 							while (rs3.next()) {
 								imglink = rs3.getString("img");
-
-								Image image3 = new Image(imglink);
-								ImageView im3 = new ImageView();
-								im3.setFitHeight(100);
-								im3.setFitWidth(100);
-								im3.setImage(image3);
-								Button imgPage = new Button("", im3);
-
-								dialogPaneContent.getChildren().addAll(imgPage);
-
-								
-
-								imgPage.setOnMouseClicked((e1) -> {
-									
-									Tableau tableau = new Tableau();
-
-									
-									Scene sceneBiblio = new Scene(tableau.buildData(), 600, 300, Color.BEIGE);
-									Stage stageBiblio = new Stage();
-									stageBiblio.setTitle("Tableau des mesures");
-									stageBiblio.setScene(sceneBiblio);
-									stageBiblio.setMinWidth(600);
-									stageBiblio.setMinHeight(900);
-									stageBiblio.show();
-									
-								});
-
+								System.out.println(imglink);
 							}
-						} catch (SQLException e1) {
-							System.err.println("Erreur de chargement");
-							e1.printStackTrace();
+							HBox dialogPaneContent = new HBox();
+
+							// Set content for Dialog Pane
+							dialog.getDialogPane().setContent(dialogPaneContent);
+
+							System.out.println(z);
+
+							Image image3 = new Image(imglink);
+							ImageView im3 = new ImageView();
+							im3.setFitHeight(100);
+							im3.setFitWidth(100);
+							im3.setImage(image3);
+
+							Button btnPageClick = new Button("", im3);
+							dialogPaneContent.getChildren().addAll(btnPageClick);
+
+
+							btnPageClick.setOnMouseClicked((e1) -> {
+								try {
+									String sql5 = "SELECT idPage FROM Page WHERE idLivre = " + z + "";
+									// put result in a ResultSet
+									ResultSet rs5 = stmt.executeQuery(sql5);
+									while (rs5.next()) {
+										idPages = rs5.getInt("idPage");
+									}
+								} catch (SQLException e2) {
+									System.err.println("Erreur de chargement");
+									e2.printStackTrace();
+								}
+								Tableau tableau = new Tableau();
+
+								Scene sceneBiblio = new Scene(tableau.buildData(idPages), 600, 300, Color.BEIGE);
+								Stage stageBiblio = new Stage();
+								stageBiblio.setTitle("Tableau des mesures");
+								stageBiblio.setScene(sceneBiblio);
+								stageBiblio.setMinWidth(600);
+								stageBiblio.setMinHeight(900);
+								stageBiblio.show();
+
+							});
 						}
-					}
 
-					// Set content for Dialog Pane
-					dialog.getDialogPane().setContent(dialogPaneContent);
-
-					// Remove default ButtonTypes
+//					// Remove default ButtonTypes
 					dialog.getButtonTypes().clear();
 					dialog.getButtonTypes().addAll(ok, Supprimer, Annuler);
 
-					// option != null.
+//					// option != null.
 					Optional<ButtonType> option = dialog.showAndWait();
 
 					if (option.get() == null) {
@@ -245,9 +251,14 @@ public class BibliothequeScans {
 					} else {
 						this.label.setText("-");
 					}
+
+					} catch (SQLException e1) {
+						System.err.println("Erreur de chargement");
+						e1.printStackTrace();
+					}
+
 				});
 			}
-
 		} catch (SQLException e) {
 			System.err.println("Erreur de chargement");
 			e.printStackTrace();

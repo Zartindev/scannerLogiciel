@@ -25,7 +25,7 @@ public class Tableau{
   
 
     //CONNECTION DATABASE
-    public TableView buildData(){
+    public TableView buildData(int z){
     	TableView tableview = new TableView();
     	String url = "jdbc:mysql://localhost/projet?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
     	String login = "root";
@@ -36,7 +36,7 @@ public class Tableau{
         	Class.forName("com.mysql.cj.jdbc.Driver");
   			conn = DriverManager.getConnection(url, login, password);
             //SQL FOR SELECTING ALL OF CUSTOMER
-            String SQL = "SELECT * from mesure_caractere";
+            String SQL = "SELECT * from mesure_caractere WHERE idPage=" + z +";";
             //ResultSet
             ResultSet rs = conn.createStatement().executeQuery(SQL);
 
