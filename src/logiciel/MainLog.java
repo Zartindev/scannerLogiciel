@@ -228,15 +228,15 @@ public class MainLog extends Application {
 					// This variable take the index of where the user click on the book's name 
 					int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex() + 1;
 
-					System.out.println(selectedIndex);
+					System.out.println("ah : " + nomLivreSql.get(i));
 					
 					
 					
 					//---------------------------
 									
 									// test if the name of the book and the pic is not empty
-									// if not then the page isnt add to the BDD
-									if ( imgPage == "") {
+									// if not then the page isnt add to the BDD and a dialog is send for the user
+									if (nomLivreSql.get(i) == null || imgPage == "") {
 
 										Alert dialog = new Alert(AlertType.INFORMATION);
 										dialog.setTitle("Information d'ajout - ERREUR");
@@ -335,7 +335,7 @@ public class MainLog extends Application {
 			 */
 			Scene sceneBiblioS = new Scene(biblioS.pageBiblioScans(), 800, 500, Color.BEIGE);
 			Stage stageBiblioS = new Stage();
-			stageBiblioS.setTitle("BIBLIOTHEQUE DES SCANS");
+			stageBiblioS.setTitle("TABLEAU DES MESURES SCANNÉES");
 			stageBiblioS.setScene(sceneBiblioS);
 			stageBiblioS.show();
 
