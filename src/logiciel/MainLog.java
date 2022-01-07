@@ -144,7 +144,7 @@ public class MainLog extends Application {
 		Label textChoseBook = new Label("      Choississez le livre \ncorrespondant à la page :");
 		Visuals.visualLabelsRed(textChoseBook);
 
-		Button scannerPage = new Button("Scanné votre page");
+		Button scannerPage = new Button("Scanner votre page");
 		
 
 		// PLACEMENT horizontals/verticals of the elements (center in grid box)
@@ -216,25 +216,27 @@ public class MainLog extends Application {
 				while (rs2.next()) {
 					nomLivreSql.put(i,rs2.getString("titre"));
 					choiceBox.getItems().add(nomLivreSql.get(i));
+					System.out.println("AHHH : " + nomLivreSql.get(i));
 					
 				}
 				
-				
+				// Most important button, which going to make the final add of the measures in the BDD,
+				// but also add in the Bibliotheque Analyse the measures.
 				scannerPage.setOnMouseClicked((e1) -> {
 					
 					
 					// This variable take the index of where the user click on the book's name 
 					int selectedIndex = choiceBox.getSelectionModel().getSelectedIndex() + 1;
 
-					System.out.println("ah : " + nomLivreSql.get(i));
+					System.out.println(selectedIndex);
 					
 					
 					
 					//---------------------------
 									
-									// test if the name of the book and the pic is not empty
+									// test if the index in the choiceBox is not empty, and the pic is not empty
 									// if not then the page isnt add to the BDD and a dialog is send for the user
-									if (nomLivreSql.get(i) == null || imgPage == "") {
+									if (selectedIndex == 0 || imgPage == "") {
 
 										Alert dialog = new Alert(AlertType.INFORMATION);
 										dialog.setTitle("Information d'ajout - ERREUR");
@@ -374,9 +376,8 @@ public class MainLog extends Application {
 		});
 			
 				
-		
+		// this button is used to refresh the application
 		refresh.setOnMouseClicked((e) -> {
-			// System.exit(0);
 
 			root.getChildren().remove(adminbutton);
 			
