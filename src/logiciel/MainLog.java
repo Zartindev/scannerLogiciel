@@ -411,7 +411,8 @@ public class MainLog extends Application {
 							;
 							// get the link of the pic, and add it in a string fileContenu
 							// for using it and dispay it under the button openButton
-							String fileContenu = ""+ file.getAbsolutePath();
+							String fileContenu = "file:///"+ file.getAbsolutePath();
+						
 							String newFileContenu = fileContenu.replace('\\', '/');
 							imgPage = newFileContenu;
 							// changer ici les antislash en slash
