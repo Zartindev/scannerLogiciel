@@ -1,5 +1,5 @@
 # scannerLogiciel
- Affin que l'appli fonctionne, il faut au préalable supprimmer les potentiels fichier de javaFx et MySQLconnector de notre dernier commit et les remplacer par les votre car l'appli nécessite  JavaFX et MySQLconnector affin de fonctionner. Pour cela :
+ Afin que l'appli fonctionne, il faut au préalable supprimer les potentiels fichier de javaFx et MySQLconnector de notre dernier commit et les remplacer par les votre car l'appli nécessite  JavaFX et MySQLconnector affin de fonctionner. Pour cela :
  
  MySQLconnector :
  - Aller sur ce site -> https://dev.mysql.com/downloads/connector/j/
